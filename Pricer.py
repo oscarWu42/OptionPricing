@@ -42,7 +42,7 @@ class Pricer:
             df = df if i != steps else df_last
             value.iloc[:, i - 1] = value.iloc[:, i].apply(lambda x: x * df)
 
-            current = data[['t{}'.format(i - 1), 't{}'.format(i)]]  # Get two consecutive cols
+            current = pd.concat([data['t{}'.format(i - 1)], value.iloc[:, i]], axis=1)  # Get two consecutive cols
             ITM = current[current.iloc[:, 0] < opt.strike]
             ITM.iloc[:, -1] = ITM.iloc[:, -1].apply(option_exercise)
 
